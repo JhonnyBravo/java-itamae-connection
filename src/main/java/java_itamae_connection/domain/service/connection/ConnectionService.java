@@ -20,6 +20,8 @@ public abstract class ConnectionService {
         buffer.append(cnInfo.getDbName());
         buffer.append("?characterEncoding=" + cnInfo.getEncoding());
         buffer.append("&serverTimezone=" + cnInfo.getTimeZone());
+        buffer.append("&verifyServerCertificate=false");
+        buffer.append("&useSSL=false");
 
         final String cnStr = new String(buffer);
         final Connection connection = DriverManager.getConnection(cnStr, cnInfo.getUserName(), cnInfo.getPassword());
