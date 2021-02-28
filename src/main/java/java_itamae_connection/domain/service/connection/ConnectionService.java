@@ -22,6 +22,7 @@ public abstract class ConnectionService {
         buffer.append("&serverTimezone=" + cnInfo.getTimeZone());
         buffer.append("&verifyServerCertificate=false");
         buffer.append("&useSSL=false");
+        buffer.append("&allowPublicKeyRetrieval=true");
 
         final String cnStr = new String(buffer);
         final Connection connection = DriverManager.getConnection(cnStr, cnInfo.getUserName(), cnInfo.getPassword());
