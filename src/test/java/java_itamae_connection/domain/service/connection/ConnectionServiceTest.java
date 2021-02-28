@@ -1,7 +1,8 @@
 package java_itamae_connection.domain.service.connection;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.sql.Connection;
 
