@@ -1,6 +1,9 @@
 package java_itamae_connection.domain.model;
 
 import java.io.Serializable;
+import java.util.Optional;
+
+import jakarta.validation.constraints.NotNull;
 
 public class ConnectionInfo implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -9,15 +12,19 @@ public class ConnectionInfo implements Serializable {
     private String portNumber;
     private String encoding;
     private String timeZone;
+    @NotNull
     private String dbName;
+    @NotNull
     private String userName;
+    @NotNull
     private String password;
 
     /**
      * @return hostName DB サーバのホスト名を返す。
      */
     public String getHostName() {
-        return hostName;
+        final Optional<String> value = Optional.ofNullable(hostName);
+        return value.orElse("localhost");
     }
 
     /**
@@ -31,7 +38,8 @@ public class ConnectionInfo implements Serializable {
      * @return portNumber DB 接続時に使用するポート番号を返す。
      */
     public String getPortNumber() {
-        return portNumber;
+        final Optional<String> value = Optional.ofNullable(portNumber);
+        return value.orElse("3306");
     }
 
     /**
@@ -45,7 +53,8 @@ public class ConnectionInfo implements Serializable {
      * @return encoding DB サーバの文字エンコーディングを返す。
      */
     public String getEncoding() {
-        return encoding;
+        final Optional<String> value = Optional.ofNullable(encoding);
+        return value.orElse("UTF-8");
     }
 
     /**
@@ -59,7 +68,8 @@ public class ConnectionInfo implements Serializable {
      * @return timeZone DB サーバのタイムゾーンを返す。
      */
     public String getTimeZone() {
-        return timeZone;
+        final Optional<String> value = Optional.ofNullable(timeZone);
+        return value.orElse("JST");
     }
 
     /**
