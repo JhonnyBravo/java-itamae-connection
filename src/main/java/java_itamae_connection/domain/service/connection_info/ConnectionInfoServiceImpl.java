@@ -1,35 +1,70 @@
 package java_itamae_connection.domain.service.connection_info;
 
-import java.io.Reader;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.File;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.nio.file.Paths;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.function.Function;
 import java_itamae_connection.domain.model.ConnectionInfo;
 import java_itamae_contents.domain.model.ContentsAttribute;
-import java_itamae_contents.domain.repository.stream.StreamRepository;
-import java_itamae_contents.domain.repository.stream.StreamRepositoryImpl;
-import java_itamae_properties.domain.repository.properties.PropertiesRepository;
-import java_itamae_properties.domain.repository.properties.PropertiesRepositoryImpl;
 
 public class ConnectionInfoServiceImpl implements ConnectionInfoService {
   @Override
   public ConnectionInfo getConnectionInfo(ContentsAttribute attr) throws Exception {
-    final StreamRepository sr = new StreamRepositoryImpl();
-    final PropertiesRepository pr = new PropertiesRepositoryImpl();
-    Map<String, String> properties = new HashMap<>();
+    /**
+     * 拡張子無しのファイル名を返す。
+     */
+    final Function<String, String> getFileName = path -> {
+      final String fileName = Paths.get(path).toFile().getName();
+      return fileName.substring(0, fileName.lastIndexOf("."));
+    };
 
-    try (Reader reader = sr.getReader(attr)) {
-      properties = pr.getProperties(reader);
-    }
+    /**
+     * 親ディレクトリを返す。
+     */
+    final Function<String, File> getDirectory = path -> {
+      return Paths.get(path).getParent().toFile();
+    };
+
+    final Locale locale = Locale.getDefault();
+    final String fileName = getFileName.apply(attr.getPath());
+
+    final URL[] url = {getDirectory.apply(attr.getPath()).toURI().toURL()};
+    final URLClassLoader loader = new URLClassLoader(url);
+
+    final ResourceBundle bundle = ResourceBundle.getBundle(fileName, locale, loader);
 
     final ConnectionInfo cnInfo = new ConnectionInfo();
 
-    cnInfo.setHostName(properties.get("hostName"));
-    cnInfo.setPortNumber(properties.get("portNumber"));
-    cnInfo.setEncoding(properties.get("encoding"));
-    cnInfo.setTimeZone(properties.get("timeZone"));
-    cnInfo.setDbName(properties.get("dbName"));
-    cnInfo.setUserName(properties.get("userName"));
-    cnInfo.setPassword(properties.get("password"));
+    if (bundle.containsKey("hostName")) {
+      cnInfo.setHostName(bundle.getString("hostName"));
+    }
+
+    if (bundle.containsKey("portNumber")) {
+      cnInfo.setPortNumber(bundle.getString("portNumber"));
+    }
+
+    if (bundle.containsKey("encoding")) {
+      cnInfo.setEncoding(bundle.getString("encoding"));
+    }
+
+    if (bundle.containsKey("timeZone")) {
+      cnInfo.setTimeZone(bundle.getString("timeZone"));
+    }
+
+    if (bundle.containsKey("dbName")) {
+      cnInfo.setDbName(bundle.getString("dbName"));
+    }
+
+    if (bundle.containsKey("userName")) {
+      cnInfo.setUserName(bundle.getString("userName"));
+    }
+
+    if (bundle.containsKey("password")) {
+      cnInfo.setPassword(bundle.getString("password"));
+    }
 
     return cnInfo;
   }
