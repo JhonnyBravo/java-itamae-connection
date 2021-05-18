@@ -29,6 +29,8 @@ public abstract class ConnectionService {
     buffer.append("&allowPublicKeyRetrieval=true");
 
     final String cnStr = new String(buffer);
+
+    Class.forName("com.mysql.cj.jdbc.Driver");
     return DriverManager.getConnection(cnStr, cnInfo.getUserName(), cnInfo.getPassword());
   }
 }
