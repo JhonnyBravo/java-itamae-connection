@@ -9,12 +9,19 @@ import java_itamae_contents.domain.repository.stream.StreamRepository;
 import java_itamae_contents.domain.repository.stream.StreamRepositoryImpl;
 import java_itamae_properties.domain.repository.properties.PropertiesRepository;
 import java_itamae_properties.domain.repository.properties.PropertiesRepositoryImpl;
+import javax.enterprise.inject.New;
+import javax.inject.Inject;
 
 public class ConnectionInfoServiceImpl implements ConnectionInfoService {
+  @Inject
+  @New(StreamRepositoryImpl.class)
+  private StreamRepository sr;
+  @Inject
+  @New(PropertiesRepositoryImpl.class)
+  private PropertiesRepository pr;
+
   @Override
   public ConnectionInfo getConnectionInfo(ContentsAttribute attr) throws Exception {
-    final StreamRepository sr = new StreamRepositoryImpl();
-    final PropertiesRepository pr = new PropertiesRepositoryImpl();
     Map<String, String> properties = new HashMap<>();
 
     try (Reader reader = sr.getReader(attr)) {
