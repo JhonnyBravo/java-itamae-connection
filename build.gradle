@@ -8,9 +8,9 @@
 
 plugins {
     // Apply the java-library plugin to add support for Java Library
-    id 'java'
+    id 'java-library'
     id 'eclipse'
-    id 'maven'
+    id 'maven-publish'
     id 'checkstyle'
     id 'pmd'
 }
@@ -25,14 +25,15 @@ repositories {
 
 dependencies {
     // This dependency is exported to consumers, that is to say found on their compile classpath.
-    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.22'
-    compile 'com.github.JhonnyBravo:java-itamae-properties:master-SNAPSHOT'
+    api group: 'mysql', name: 'mysql-connector-java', version: '8.0.22'
+    api 'com.github.JhonnyBravo:java-itamae-properties:master-SNAPSHOT'
 
     // Use JUnit test framework
-    testCompile 'junit:junit:4.13.2'
+    testImplementation 'junit:junit:4.13.2'
 }
 
 group='com.github.JhonnyBravo'
+version='master-SNAPSHOT'
 sourceCompatibility=1.8
 targetCompatibility=1.8
 
@@ -49,6 +50,40 @@ task javadocJar(type: Jar,dependsOn: javadoc){
 artifacts {
     archives sourcesJar
     archives javadocJar
+}
+
+java{
+    withJavadocJar()
+    withSourcesJar()
+}
+
+publishing{
+    publications{
+        mavenJava(MavenPublication){
+            artifactId='java-itamae-connection'
+            from components.java
+            versionMapping{
+                usage('java-api'){
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime'){
+                    fromResolutionResult()
+                }
+            }
+            pom{
+                name='java-itamae-connection'
+                description='DB 接続を管理する為の Java ライブラリ'
+                url='https://github.com/JhonnyBravo/java-itamae-connection'
+            }
+        }
+    }
+    repositories{
+        maven{
+            def releasesRepoUrl=layout.buildDirectory.dir('repos/releases')
+            def snapshotsRepoUrl=layout.buildDirectory.dir('repos/snapshots')
+            url=version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+        }
+    }
 }
 
 javadoc {
