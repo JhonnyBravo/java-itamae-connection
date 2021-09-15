@@ -26,21 +26,21 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom 'com.github.JhonnyBravo:java-se-template-bom:dependency-management-SNAPSHOT'
+        mavenBom 'com.github.JhonnyBravo:java-se-template-bom:master-SNAPSHOT'
     }
 }
 
 dependencies {
     // This dependency is exported to consumers, that is to say found on their compile classpath.
     api group: 'mysql', name: 'mysql-connector-java', version: '8.0.22'
-    api 'com.github.JhonnyBravo:java-itamae-properties:dependency-management-SNAPSHOT'
+    api 'com.github.JhonnyBravo:java-itamae-properties:master-SNAPSHOT'
 
     // Use JUnit test framework
     testImplementation 'junit:junit'
 }
 
 group='com.github.JhonnyBravo'
-version='dependency-management-SNAPSHOT'
+version='master-SNAPSHOT'
 sourceCompatibility=1.8
 targetCompatibility=1.8
 
