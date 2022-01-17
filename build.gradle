@@ -32,7 +32,7 @@ dependencyManagement {
 
 dependencies {
     // This dependency is exported to consumers, that is to say found on their compile classpath.
-    api group: 'mysql', name: 'mysql-connector-java', version: '8.0.22'
+    api group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
     api 'com.github.JhonnyBravo:java-itamae-properties:master-SNAPSHOT'
 
     // Use JUnit test framework
