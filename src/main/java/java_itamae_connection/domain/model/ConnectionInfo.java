@@ -4,9 +4,7 @@ import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Optional;
 
-/**
- * DB への接続情報を管理する。
- */
+/** DB への接続情報を管理する。 */
 public class ConnectionInfo implements Serializable {
   private static final long serialVersionUID = 1L;
 
@@ -14,12 +12,9 @@ public class ConnectionInfo implements Serializable {
   private String portNumber;
   private String encoding;
   private String timeZone;
-  @NotNull
-  private String dbName;
-  @NotNull
-  private String userName;
-  @NotNull
-  private String password;
+  @NotNull private String dbName;
+  @NotNull private String userName;
+  @NotNull private String password;
 
   /**
    * DB サーバのホスト名を返す。(既定値: localhost)
