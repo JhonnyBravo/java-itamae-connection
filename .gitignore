@@ -121,3 +121,4 @@ $RECYCLE.BIN/
 
 # Docker
 mysql/data
+/target/
