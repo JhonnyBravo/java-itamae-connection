@@ -77,6 +77,6 @@ public class NotSetOptions {
   @Test
   public void css004() {
     final ConnectionInfo cnInfo = cs.convertToConnectionInfo(properties);
-    assertThat(cnInfo.getTimeZone(), is("JST"));
+    assertThat(cnInfo.getTimeZone(), is("SERVER"));
   }
 }
