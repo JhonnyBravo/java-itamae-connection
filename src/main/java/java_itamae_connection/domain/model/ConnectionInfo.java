@@ -74,13 +74,13 @@ public class ConnectionInfo implements Serializable {
   }
 
   /**
-   * DB サーバのタイムゾーンを返す。(既定値: JST)
+   * DB サーバのタイムゾーンを返す。(既定値: SERVER)
    *
    * @return timeZone DB サーバのタイムゾーン
    */
   public String getTimeZone() {
     final Optional<String> value = Optional.ofNullable(timeZone);
-    return value.orElse("JST");
+    return value.orElse("SERVER");
   }
 
   /**
