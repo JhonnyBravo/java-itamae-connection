@@ -100,14 +100,18 @@ javadoc {
 }
 
 checkstyle {
-    toolVersion='8.41.1'
+    toolVersion='10.3.3'
 }
 
 pmd {
-    toolVersion='6.33.0'
+    toolVersion='6.49.0'
     ignoreFailures=true
     ruleSetFiles=files("config/pmd/custom-java.xml")
     ruleSets=[]
+}
+
+googleJavaFormat {
+    toolVersion = '1.15.0'
 }
 
 tasks.withType(JavaCompile) {
