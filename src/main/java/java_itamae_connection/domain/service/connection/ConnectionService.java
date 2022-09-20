@@ -14,7 +14,7 @@ public interface ConnectionService extends BaseService {
    * @param properties DB 接続の情報を納めた {@link Map} を指定する。
    * @return connectionInfo {@link ConnectionInfo} を返す。
    */
-  public default ConnectionInfo convertToConnectionInfo(Map<String, String> properties) {
+  default ConnectionInfo convertToConnectionInfo(final Map<String, String> properties) {
     final ConnectionInfo cnInfo = new ConnectionInfo();
 
     cnInfo.setHostName(properties.get("hostName"));
@@ -35,18 +35,19 @@ public interface ConnectionService extends BaseService {
    * @return connection {@link Connection} を取得する。
    * @throws Exception {@link Exception}
    */
-  public default Connection getConnection(ConnectionInfo cnInfo) throws Exception {
+  default Connection getConnection(final ConnectionInfo cnInfo) throws Exception {
     final StringBuilder buffer = new StringBuilder();
 
-    buffer.append("jdbc:mysql://");
-    buffer.append(cnInfo.getHostName() + ":");
-    buffer.append(cnInfo.getPortNumber() + "/");
-    buffer.append(cnInfo.getDbName());
-    buffer.append("?characterEncoding=" + cnInfo.getEncoding());
-    buffer.append("&serverTimezone=" + cnInfo.getTimeZone());
-    buffer.append("&verifyServerCertificate=false");
-    buffer.append("&useSSL=false");
-    buffer.append("&allowPublicKeyRetrieval=true");
+    buffer
+        .append("jdbc:mysql://")
+        .append(cnInfo.getHostName() + ":")
+        .append(cnInfo.getPortNumber() + "/")
+        .append(cnInfo.getDbName())
+        .append("?characterEncoding=" + cnInfo.getEncoding())
+        .append("&serverTimezone=" + cnInfo.getTimeZone())
+        .append("&verifyServerCertificate=false")
+        .append("&useSSL=false")
+        .append("&allowPublicKeyRetrieval=true");
 
     final String cnStr = new String(buffer);
 

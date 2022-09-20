@@ -8,12 +8,19 @@ import java.util.Optional;
 public class ConnectionInfo implements Serializable {
   private static final long serialVersionUID = 1L;
 
+  /** 接続先 DB のホスト名 */
   private String hostName;
+  /** DB 接続時に使用するポート番号 */
   private String portNumber;
+  /** 接続先 DB の文字エンコーディング */
   private String encoding;
+  /** 接続先 DB のタイムゾーン */
   private String timeZone;
+  /** 接続対象とする DB の名前 */
   @NotNull private String dbName;
+  /** DB 接続時に使用するユーザ名 */
   @NotNull private String userName;
+  /** DB 接続時に使用するパスワード */
   @NotNull private String password;
 
   /**
@@ -31,7 +38,7 @@ public class ConnectionInfo implements Serializable {
    *
    * @param hostName DB サーバのホスト
    */
-  public void setHostName(String hostName) {
+  public void setHostName(final String hostName) {
     this.hostName = hostName;
   }
 
@@ -50,7 +57,7 @@ public class ConnectionInfo implements Serializable {
    *
    * @param portNumber DB 接続時に使用するポート番号
    */
-  public void setPortNumber(String portNumber) {
+  public void setPortNumber(final String portNumber) {
     this.portNumber = portNumber;
   }
 
@@ -69,7 +76,7 @@ public class ConnectionInfo implements Serializable {
    *
    * @param encoding DB サーバの文字エンコーディング
    */
-  public void setEncoding(String encoding) {
+  public void setEncoding(final String encoding) {
     this.encoding = encoding;
   }
 
@@ -88,7 +95,7 @@ public class ConnectionInfo implements Serializable {
    *
    * @param timeZone DB サーバのタイムゾーン
    */
-  public void setTimeZone(String timeZone) {
+  public void setTimeZone(final String timeZone) {
     this.timeZone = timeZone;
   }
 
@@ -106,7 +113,7 @@ public class ConnectionInfo implements Serializable {
    *
    * @param dbName DB 接続時に使用する DB の名前
    */
-  public void setDbName(String dbName) {
+  public void setDbName(final String dbName) {
     this.dbName = dbName;
   }
 
@@ -124,7 +131,7 @@ public class ConnectionInfo implements Serializable {
    *
    * @param userName DB 接続時に使用するユーザ名
    */
-  public void setUserName(String userName) {
+  public void setUserName(final String userName) {
     this.userName = userName;
   }
 
@@ -142,7 +149,7 @@ public class ConnectionInfo implements Serializable {
    *
    * @param password DB 接続時に使用するパスワード
    */
-  public void setPassword(String password) {
+  public void setPassword(final String password) {
     this.password = password;
   }
 }
