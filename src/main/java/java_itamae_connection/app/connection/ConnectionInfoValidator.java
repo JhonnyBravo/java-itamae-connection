@@ -22,10 +22,11 @@ public class ConnectionInfoValidator implements Predicate<ConnectionInfo> {
    *     </ul>
    */
   @Override
-  public boolean test(ConnectionInfo cnInfo) {
+  public boolean test(final ConnectionInfo cnInfo) {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
     final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
     final Set<ConstraintViolation<ConnectionInfo>> resultSet = validator.validate(cnInfo);
+    boolean result = true;
 
     if (!resultSet.isEmpty()) {
       resultSet.stream()
@@ -36,9 +37,9 @@ public class ConnectionInfoValidator implements Predicate<ConnectionInfo> {
                 logger.warn("{}: {}", path, message);
               });
 
-      return false;
-    } else {
-      return true;
+      result = false;
     }
+
+    return result;
   }
 }
