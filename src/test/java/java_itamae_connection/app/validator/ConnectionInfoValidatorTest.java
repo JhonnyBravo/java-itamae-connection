@@ -4,13 +4,13 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.util.Map;
+import java_itamae.domain.component.properties.PropertiesComponent;
+import java_itamae.domain.component.properties.PropertiesComponentImpl;
 import java_itamae.domain.model.contents.ContentsModel;
-import java_itamae.domain.service.properties.PropertiesService;
-import java_itamae.domain.service.properties.PropertiesServiceImpl;
 import java_itamae_connection.app.connection.ConnectionInfoValidator;
 import java_itamae_connection.domain.model.ConnectionInfo;
-import java_itamae_connection.domain.service.connection.ConnectionService;
-import java_itamae_connection.domain.service.connection.ConnectionServiceImpl;
+import java_itamae_connection.domain.repository.common.BaseRepository;
+import java_itamae_connection.domain.repository.common.BaseRepositoryImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.theories.DataPoint;
@@ -22,8 +22,8 @@ import org.junit.runner.RunWith;
 public class ConnectionInfoValidatorTest {
   private ContentsModel model;
   private ConnectionInfoValidator validator;
-  private PropertiesService ps;
-  private ConnectionService cs;
+  private PropertiesComponent component;
+  private BaseRepository repository;
 
   // dbName が指定されていない場合
   @DataPoint public static String DB_NAME = "src/test/resources/test3.properties";
@@ -35,8 +35,8 @@ public class ConnectionInfoValidatorTest {
   @Before
   public void setUp() throws Exception {
     model = new ContentsModel();
-    ps = new PropertiesServiceImpl();
-    cs = new ConnectionServiceImpl();
+    component = new PropertiesComponentImpl();
+    repository = new BaseRepositoryImpl();
     validator = new ConnectionInfoValidator();
   }
 
@@ -44,9 +44,8 @@ public class ConnectionInfoValidatorTest {
   @Theory
   public void validation001(String resourceName) throws Exception {
     model.setPath(resourceName);
-    ps.init(model);
-    final Map<String, String> properties = ps.getProperties();
-    final ConnectionInfo cnInfo = cs.convertToConnectionInfo(properties);
+    final Map<String, String> properties = component.getProperties(model);
+    final ConnectionInfo cnInfo = repository.convertToConnectionInfo(properties);
 
     final boolean result = validator.test(cnInfo);
     assertThat(result, is(false));
@@ -56,9 +55,8 @@ public class ConnectionInfoValidatorTest {
   @Test
   public void validation002() throws Exception {
     model.setPath("src/test/resources/connection.properties");
-    ps.init(model);
-    final Map<String, String> properties = ps.getProperties();
-    final ConnectionInfo cnInfo = cs.convertToConnectionInfo(properties);
+    final Map<String, String> properties = component.getProperties(model);
+    final ConnectionInfo cnInfo = repository.convertToConnectionInfo(properties);
 
     final boolean result = validator.test(cnInfo);
     assertThat(result, is(true));
