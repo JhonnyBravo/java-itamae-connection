@@ -1,13 +1,12 @@
-package java_itamae_connection.domain.service.connection;
+package java_itamae_connection.domain.repository.common;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Map;
-import java_itamae.domain.service.common.BaseService;
 import java_itamae_connection.domain.model.ConnectionInfo;
 
-/** DB への接続を管理する。 */
-public interface ConnectionService extends BaseService {
+/** Repository クラスの土台となるクラス。 */
+public interface BaseRepository {
   /**
    * DB 接続の設定情報を格納した {@link Map} を {@link ConnectionInfo} に変換する。
    *
