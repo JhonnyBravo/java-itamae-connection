@@ -1,4 +1,4 @@
-package java_itamae_connection.app.validator;
+package java_itamae_connection.domain.model;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -7,10 +7,6 @@ import java.util.Map;
 import java_itamae.domain.component.properties.PropertiesComponent;
 import java_itamae.domain.component.properties.PropertiesComponentImpl;
 import java_itamae.domain.model.contents.ContentsModel;
-import java_itamae_connection.app.connection.ConnectionInfoValidator;
-import java_itamae_connection.domain.model.ConnectionInfo;
-import java_itamae_connection.domain.repository.common.BaseRepository;
-import java_itamae_connection.domain.repository.common.BaseRepositoryImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.theories.DataPoint;
@@ -20,10 +16,9 @@ import org.junit.runner.RunWith;
 
 @RunWith(Theories.class)
 public class ConnectionInfoValidatorTest {
-  private ContentsModel model;
+  private ConnectionInfoConverter converter;
   private ConnectionInfoValidator validator;
   private PropertiesComponent component;
-  private BaseRepository repository;
 
   // dbName が指定されていない場合
   @DataPoint public static String DB_NAME = "src/test/resources/test3.properties";
@@ -34,18 +29,19 @@ public class ConnectionInfoValidatorTest {
 
   @Before
   public void setUp() throws Exception {
-    model = new ContentsModel();
     component = new PropertiesComponentImpl();
-    repository = new BaseRepositoryImpl();
     validator = new ConnectionInfoValidator();
+    converter = new ConnectionInfoConverter();
   }
 
   /** {@link ConnectionInfo} の必須項目に値が設定されていない場合に false が返されること。 */
   @Theory
   public void validation001(String resourceName) throws Exception {
+    final ContentsModel model = new ContentsModel();
     model.setPath(resourceName);
+
     final Map<String, String> properties = component.getProperties(model);
-    final ConnectionInfo cnInfo = repository.convertToConnectionInfo(properties);
+    final ConnectionInfo cnInfo = converter.apply(properties);
 
     final boolean result = validator.test(cnInfo);
     assertThat(result, is(false));
@@ -54,9 +50,11 @@ public class ConnectionInfoValidatorTest {
   /** {@link ConnectionInfo} の必須項目に値が設定されている場合に true が返されること。 */
   @Test
   public void validation002() throws Exception {
+    final ContentsModel model = new ContentsModel();
     model.setPath("src/test/resources/connection.properties");
+
     final Map<String, String> properties = component.getProperties(model);
-    final ConnectionInfo cnInfo = repository.convertToConnectionInfo(properties);
+    final ConnectionInfo cnInfo = converter.apply(properties);
 
     final boolean result = validator.test(cnInfo);
     assertThat(result, is(true));

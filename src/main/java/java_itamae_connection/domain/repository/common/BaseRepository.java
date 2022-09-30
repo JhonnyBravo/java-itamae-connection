@@ -2,31 +2,10 @@ package java_itamae_connection.domain.repository.common;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.util.Map;
 import java_itamae_connection.domain.model.ConnectionInfo;
 
 /** Repository クラスの土台となるクラス。 */
 public interface BaseRepository {
-  /**
-   * DB 接続の設定情報を格納した {@link Map} を {@link ConnectionInfo} に変換する。
-   *
-   * @param properties DB 接続の情報を納めた {@link Map} を指定する。
-   * @return connectionInfo {@link ConnectionInfo} を返す。
-   */
-  default ConnectionInfo convertToConnectionInfo(final Map<String, String> properties) {
-    final ConnectionInfo cnInfo = new ConnectionInfo();
-
-    cnInfo.setHostName(properties.get("hostName"));
-    cnInfo.setPortNumber(properties.get("portNumber"));
-    cnInfo.setEncoding(properties.get("encoding"));
-    cnInfo.setTimeZone(properties.get("timeZone"));
-    cnInfo.setDbName(properties.get("dbName"));
-    cnInfo.setUserName(properties.get("userName"));
-    cnInfo.setPassword(properties.get("password"));
-
-    return cnInfo;
-  }
-
   /**
    * DB 接続を確立する。
    *
