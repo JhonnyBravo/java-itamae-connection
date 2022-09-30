@@ -1,11 +1,10 @@
-package java_itamae_connection.app.connection;
+package java_itamae_connection.domain.model;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import java.util.Set;
 import java.util.function.Predicate;
-import java_itamae_connection.domain.model.ConnectionInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
