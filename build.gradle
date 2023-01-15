@@ -22,6 +22,13 @@ repositories {
     // You can declare any Maven/Ivy/file repository here.
     mavenCentral()
     jcenter()
+    maven{
+        url=uri('https://maven.pkg.github.com/jhonnybravo/java-itamae')
+        credentials{
+            username=project.findProperty('gpr.user') ?: System.getenv('USERNAME')
+            password=project.findProperty('gpr.key') ?: System.getenv('TOKEN')
+        }
+    }
     maven{url 'https://jitpack.io'}
 }
 
@@ -34,16 +41,16 @@ dependencyManagement {
 dependencies {
     // This dependency is exported to consumers, that is to say found on their compile classpath.
     api group: 'mysql', name: 'mysql-connector-java', version: '8.0.30'
-    api 'com.github.JhonnyBravo:java-itamae:master-SNAPSHOT'
+    api 'com.github.JhonnyBravo:java-itamae:Java17-gradle-7.6-SNAPSHOT'
 
     // Use JUnit test framework
     testImplementation 'junit:junit'
 }
 
 group='com.github.JhonnyBravo'
-version='master-SNAPSHOT'
-sourceCompatibility=1.8
-targetCompatibility=1.8
+version='Java17-gradle-7.6-SNAPSHOT'
+sourceCompatibility=17
+targetCompatibility=17
 
 task sourcesJar(type: Jar, dependsOn: classes){
     classifier='sources'
@@ -90,6 +97,14 @@ publishing{
             def releasesRepoUrl=layout.buildDirectory.dir('repos/releases')
             def snapshotsRepoUrl=layout.buildDirectory.dir('repos/snapshots')
             url=version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+        }
+        maven{
+            name='GitHubPackages'
+            url=uri('https://maven.pkg.github.com/jhonnybravo/java-itamae-connection')
+            credentials{
+                username=project.findProperty('gpr.user') ?: System.getenv('USERNAME')
+                password=project.findProperty('gpr.key') ?: System.getenv('TOKEN')
+            }
         }
     }
 }
