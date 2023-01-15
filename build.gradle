@@ -34,14 +34,14 @@ dependencyManagement {
 dependencies {
     // This dependency is exported to consumers, that is to say found on their compile classpath.
     api group: 'mysql', name: 'mysql-connector-java', version: '8.0.30'
-    api 'com.github.JhonnyBravo:java-itamae:dependency-management-SNAPSHOT'
+    api 'com.github.JhonnyBravo:java-itamae:Java8-gradle-6.8.2-SNAPSHOT'
 
     // Use JUnit test framework
     testImplementation 'junit:junit'
 }
 
 group='com.github.JhonnyBravo'
-version='dependency-management-SNAPSHOT'
+version='Java8-gradle-6.8.2-SNAPSHOT'
 sourceCompatibility=1.8
 targetCompatibility=1.8
 
