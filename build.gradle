@@ -29,7 +29,6 @@ repositories {
             password=project.findProperty('gpr.key') ?: System.getenv('TOKEN')
         }
     }
-    maven{url 'https://jitpack.io'}
 }
 
 dependencyManagement {
