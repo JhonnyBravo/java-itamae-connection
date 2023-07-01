@@ -33,21 +33,21 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom 'com.github.JhonnyBravo:java-se-template-bom:master-SNAPSHOT'
+        mavenBom 'com.github.JhonnyBravo:java-se-template-bom:Java17-gradle-7.6-SNAPSHOT'
     }
 }
 
 dependencies {
     // This dependency is exported to consumers, that is to say found on their compile classpath.
     api group: 'mysql', name: 'mysql-connector-java', version: '8.0.30'
-    api 'com.github.JhonnyBravo:java-itamae:master-SNAPSHOT'
+    api 'com.github.JhonnyBravo:java-itamae:Java17-gradle-7.6-SNAPSHOT'
 
     // Use JUnit test framework
     testImplementation 'junit:junit'
 }
 
 group='com.github.JhonnyBravo'
-version='master-SNAPSHOT'
+version='Java17-gradle-7.6-SNAPSHOT'
 sourceCompatibility=17
 targetCompatibility=17
 
